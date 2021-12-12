@@ -12,7 +12,7 @@ document.addEventListener('keyup', stopRun);
 const keys = {
     ArrowUp: false,
     ArrowDown: false,
-    ArrowRigth: false,
+    ArrowRight: false,
     ArrowLeft: false
 };
 
@@ -26,13 +26,31 @@ function startGame() {
     start.classList.add('hide');
     setting.start = true;
     gameArea.appendChild(car);
+    setting.x = car.offsetLeft;
+    setting.y = car.offsetTop;
     requestAnimationFrame(playGame);
 }
 
 function playGame() {
-     if (setting.start) {
+    console.log('Play game!');
+    if (setting.start) {
+        if (keys.ArrowLeft) {
+            setting.x -= setting.speed;
+        }
+        if (keys.ArrowRight) {
+            setting.x += setting.speed;
+        }
+        if (keys.ArrowDown) {
+            setting.y += setting.speed;
+        }
+        if (keys.ArrowUp) {
+            setting.y -= setting.speed;
+        }
+
+        car.style.left = setting.x + 'px';
+
         requestAnimationFrame(playGame);
-     }  
+    }
 }
 
 function startRun(event) {
@@ -44,3 +62,4 @@ function stopRun(event) {
     event.preventDefault();
     keys[event.key] = false;
 }
+
