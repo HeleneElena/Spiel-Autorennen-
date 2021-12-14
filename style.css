@@ -74,7 +74,8 @@ table {
     left: 145px; /* ширина дороги 300/2 = 150 ширина 10 - 5 получается 150 - 5 =145 */
 }
 .start {
- /* position: absolute; */
+    position: absolute; 
+    
     left: 0;
     top: 0;
     width: 100%;
@@ -91,7 +92,7 @@ table {
 }
 
 .score {
-  /* position: absolute; */
+    position: absolute;
     left: 0;
     top: 0;
     width: 100%;

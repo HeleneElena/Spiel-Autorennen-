@@ -29,6 +29,9 @@ function getQuantityElements(heightElement) {
 
 function startGame() {
     start.classList.add('hide');
+    gameArea.innerHTML = '';
+    car.style.left = '125px';
+    car.style.top = 'auto';
 
     for (let i = 0; i < 20; i++) {
         const line = document.createElement('div');
@@ -47,7 +50,7 @@ function startGame() {
         enemy.style.background = 'transparent url("./image/enemy.png") center / cover no-repeat';
         gameArea.appendChild(enemy);
     }
-
+    setting.score = 0;
     setting.start = true;
     gameArea.appendChild(car);
     setting.x = car.offsetLeft;
@@ -56,10 +59,14 @@ function startGame() {
 }
 
 function playGame() {
-    moveRoad();
-    moveEnemy();
+
     console.log('Play game!');
     if (setting.start) {
+        setting.score += setting.speed;
+        score.innerHTML = "SCORE<br>" + setting.score;
+        moveRoad();
+        moveEnemy();
+
         if (keys.ArrowLeft && setting.x > 0) {
             setting.x -= setting.speed;
         }
@@ -104,7 +111,20 @@ function moveRoad() {
 
 function moveEnemy() {
     let enemy = document.querySelectorAll('.enemy');
+
     enemy.forEach(function(item) {
+        let carRect = car.getBoundingClientRect();
+        let enemyRect = item.getBoundingClientRect();
+
+        if (carRect.top <= enemyRect.bottom &&
+            carRect.right >= enemyRect.left &&
+            carRect.left <= enemyRect.right &&
+            carRect.bottom >= enemyRect.top) {
+                setting.start = false
+                console.warn("Unfall");
+                start.classList.remove('hide');
+                start.style.top = score.offsetHeight;
+        }
         item.y += setting.speed / 2;
         item.style.top = item.y + 'px';
             if (item.y >= document.documentElement.clientHeight) {
